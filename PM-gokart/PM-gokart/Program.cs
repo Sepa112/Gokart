@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+
 
 namespace PM_gokart
 {
@@ -77,28 +79,41 @@ namespace PM_gokart
             }
             Random rnd = new Random();
             int numb = rnd.Next(1, 51);
+            
             for (int i = 0; i < numb; i++)
             {
-                Console.WriteLine($"{vezeteknev[rnd.Next(vezeteknev.Count)]}-{keresztnevek[rnd.Next(keresztnevek.Count)]}");
+                //név
+                
                 string venev = vezeteknev[rnd.Next(vezeteknev.Count)];
                 string kenev = keresztnevek[rnd.Next(keresztnevek.Count)];
+                Console.WriteLine($"{venev}-{kenev}");
+
 
                 //év
                 DateTime start = new DateTime(1950, 1, 1);
                 string today = DateTime.Today.ToString("yyyy/MM/dd");
                 int range = (DateTime.Today - start).Days;
                 string szul = start.AddDays(rnd.Next(range)).ToString("yyyy/MM/dd");
-                // 18>?
-                var age = (DateTime.Now - DateTime.Parse(szul)).TotalDays / 365.242199;
-                Console.WriteLine(age);
-
+                // elmult 18?
+                var age = Math.Floor((DateTime.Now - DateTime.Parse(szul)).TotalDays / 365.242199);
+                bool elmult = false;
+                if (age >= 18)
+                {
+                    elmult = true;
+                }
+                // azonositó
                 
-                Console.WriteLine(szul);
+                string azonosito = $"Go-{venev}{kenev}-{szul.Replace("/","")}";
+                Console.WriteLine(azonosito);
 
-                //new Versenyzo(venev,kenev, szul)
+                Console.WriteLine("----------------------");
+                Versenyzo v1 = new Versenyzo(venev, kenev, szul, elmult, azonosito);
+               
+                
             }
             
-
+            
+            Console.WriteLine();
             Console.WriteLine("Nyomj meg egy gombot a kilépéshez");
             Console.ReadKey();
         }

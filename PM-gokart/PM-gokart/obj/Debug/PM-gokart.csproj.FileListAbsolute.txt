@@ -6,3 +6,10 @@ C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.csproj.CoreCompileInpu
 C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.exe
 C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.pdb
 C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.exe.config
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\bin\Debug\PM-gokart.exe.config
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\bin\Debug\PM-gokart.exe
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\bin\Debug\PM-gokart.pdb
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.csproj.AssemblyReference.cache
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.csproj.CoreCompileInputs.cache
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.exe
+C:\Users\matya\Desktop\dev\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.pdb
