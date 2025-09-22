@@ -1,0 +1,8 @@
+C:\Projekt\Gokart\PM-gokart\PM-gokart\bin\Debug\PM-gokart.exe.config
+C:\Projekt\Gokart\PM-gokart\PM-gokart\bin\Debug\PM-gokart.exe
+C:\Projekt\Gokart\PM-gokart\PM-gokart\bin\Debug\PM-gokart.pdb
+C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.csproj.AssemblyReference.cache
+C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.csproj.CoreCompileInputs.cache
+C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.exe
+C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.pdb
+C:\Projekt\Gokart\PM-gokart\PM-gokart\obj\Debug\PM-gokart.exe.config
