@@ -63,6 +63,12 @@ namespace PM_gokart
             Gokart időpontfoglaló 
             PM - 2025.09.15
             */
+            string gonev = "Nyíregyházi Gokart pálya";
+            string gocím = "László U 8, Nyíregyháza, Szabolcs-Szatmár-Bereg, 4400";
+            string telsz = "+36-30-426-1265";
+            string web = "nyiregygokart@gmail.com";
+
+            Console.WriteLine($"Üdvözlünk a {gonev}-n\n{gocím}\n{telsz}\n{web}");
             string fejlec = "Gokart időpontfoglaló ";
             Console.WriteLine(fejlec);
             for (int i = 0; i < fejlec.Length; i++) Console.Write('-');
@@ -71,11 +77,7 @@ namespace PM_gokart
             
 
 
-            string gonev = "Nyíregyházi Gokart pálya";
-            string gocím = "László U 8, Nyíregyháza, Szabolcs-Szatmár-Bereg, 4400";
-            string telsz = "+36-30-426-1265";
-            string web = "nyiregygokart@gmail.com";
-
+            
            
 
 
@@ -148,14 +150,46 @@ namespace PM_gokart
                 Console.WriteLine("----------------------");
             }
 
+            /*
             foreach (Versenyzo versenyzo in versenyok)
             {
                 Console.WriteLine(versenyzo.szul);
+            }*/
+
+            var orakDict = new Dictionary<string, bool>();
+            for (int i= 8; i < 19; i ++ )
+            {
+                string asd = i.ToString() + "-" + (i+1).ToString();
+                orakDict.Add(asd, true);
             }
 
-            
-            
-            Console.WriteLine();
+            foreach (var item in orakDict)
+            {
+                Console.WriteLine(item.Key + item.Value);
+            }
+
+            var napokDict = new Dictionary<string, Dictionary<string,bool>>();
+
+            DateTime ma = DateTime.Today;
+            var napokmaradt = DateTime.DaysInMonth(ma.Year, ma.Month) - ma.Day + 1;
+
+            for (int i = 0; i < napokmaradt; i++)
+            {
+                DateTime date = ma.AddDays(i);
+                string datum = (date).ToString("yyyy.MM.dd");
+                
+                Console.WriteLine(datum);
+                napokDict.Add(datum, orakDict);
+                
+            }
+
+            foreach (var item in napokDict)
+            {
+                Console.WriteLine(item.Key + item.Value);
+            }
+
+                //https://stackoverflow.com/questions/41029249/dictionary-of-dictionaries-in-c-sharp
+                Console.WriteLine();
             Console.WriteLine("Nyomj meg egy gombot a kilépéshez");
             Console.ReadKey();
         }
