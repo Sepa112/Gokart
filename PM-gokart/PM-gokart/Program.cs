@@ -9,8 +9,37 @@ using System.Globalization;
 
 namespace PM_gokart
 {
+    
     internal class Program
     {
+        static string Ekezet(string szoveg)
+        {
+            string ujszo = "";
+            Dictionary<char, string> ekezet = new Dictionary<char, string>()
+        {
+            {'á',"a"},
+            {'é',"e"},
+            {'ú',"u"},
+            {'ű',"u"},
+            {'ő',"o"},
+            {'ó',"o"},
+            {'ü',"u"},
+            {'ö',"o"},
+            {'í',"i"}
+        };
+            for (int i = 0; i < szoveg.Length; i++)
+            {
+                if (ekezet.ContainsKey(szoveg[i]))
+                {
+                    ujszo += ekezet[szoveg[i]];
+                }
+                else
+                {
+                    ujszo += szoveg[i];
+                }
+            }
+            return ujszo;
+        }
         public class Versenyzo
         {
             public string venev;
@@ -80,6 +109,8 @@ namespace PM_gokart
             Random rnd = new Random();
             int numb = rnd.Next(1, 51);
             
+            List<Versenyzo> versenyok = new List<Versenyzo>();
+
             for (int i = 0; i < numb; i++)
             {
                 //név
@@ -94,6 +125,7 @@ namespace PM_gokart
                 string today = DateTime.Today.ToString("yyyy/MM/dd");
                 int range = (DateTime.Today - start).Days;
                 string szul = start.AddDays(rnd.Next(range)).ToString("yyyy/MM/dd");
+                Console.WriteLine(szul);
                 // elmult 18?
                 var age = Math.Floor((DateTime.Now - DateTime.Parse(szul)).TotalDays / 365.242199);
                 bool elmult = false;
@@ -103,14 +135,24 @@ namespace PM_gokart
                 }
                 // azonositó
                 
-                string azonosito = $"Go-{venev}{kenev}-{szul.Replace("/","")}";
+                string azonosito = $"Go-{Ekezet(venev)}{Ekezet(kenev)}-{szul.Replace(".","").Replace(" ","")}";
                 Console.WriteLine(azonosito);
 
-                Console.WriteLine("----------------------");
-                Versenyzo v1 = new Versenyzo(venev, kenev, szul, elmult, azonosito);
-               
                 
+                
+                // email
+                string email = Ekezet(venev) + "." + Ekezet(kenev) + "@gmail.com";
+                Console.WriteLine(email);
+
+                versenyok.Add(new Versenyzo(venev, kenev, szul, elmult, azonosito));
+                Console.WriteLine("----------------------");
             }
+
+            foreach (Versenyzo versenyzo in versenyok)
+            {
+                Console.WriteLine(versenyzo.szul);
+            }
+
             
             
             Console.WriteLine();
