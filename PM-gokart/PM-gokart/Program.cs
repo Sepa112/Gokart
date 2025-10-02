@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Configuration;
 
 
 namespace PM_gokart
@@ -56,6 +57,21 @@ namespace PM_gokart
                 this.tizennyolc = tizennyolc;
                 this.azonosito = azonosito;
             }
+        }
+        public static string Idopont(bool szabad)
+        {
+            string asd = "";
+            if (szabad)
+            {
+                asd = "szabad";
+                
+            }
+            else
+            {
+                asd = "szabad";
+                
+            }
+            return asd;
         }
         static void Main(string[] args)
         {
@@ -185,7 +201,11 @@ namespace PM_gokart
 
             foreach (var item in napokDict)
             {
-                Console.WriteLine(item.Key + item.Value);
+                Console.WriteLine($"{item.Key}");
+                foreach (var item2 in orakDict)
+                {
+                    Console.WriteLine($" {item2.Key} {Idopont(item2.Value)}");
+                }
             }
 
                 //https://stackoverflow.com/questions/41029249/dictionary-of-dictionaries-in-c-sharp
