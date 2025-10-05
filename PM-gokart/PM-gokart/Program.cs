@@ -173,7 +173,7 @@ namespace PM_gokart
 
             DateTime ma = DateTime.Today;
             var napokmaradt = DateTime.DaysInMonth(ma.Year, ma.Month) - ma.Day + 1;
-
+            List<string> randomorak = new List<string>();
             for (int i = 0; i < napokmaradt; i++)
             {
                 DateTime date = ma.AddDays(i);
@@ -183,36 +183,35 @@ namespace PM_gokart
                 for (int j = 8; j < 19; j++)
                 {
                     string asd = j.ToString() + "-" + (j + 1).ToString();
+                    randomorak.Add(asd);
                     orakDict.Add(asd, "");
                 }
 
                 napokDict.Add(datum, new Dictionary<string, string>(orakDict));
             }
-
             
-            Console.WriteLine("-----------------------");
-            for (int i = 0; i < rnd.Next(1, numb); i++)
+            for (int i = 0; i < numb; i++)
             {
-                string randomversenyzo = versenyok[rnd.Next(0, numb)].azonosito;
+                 
                 foreach(var item in napokDict)
                 {
                     
-                     
                     foreach (var item2 in item.Value)
                     {
-
-
+                        
                         var randomnapok = napokDict.Keys.ToList();                                
                         int index = rnd.Next(randomnapok.Count);
+                        int index2 = rnd.Next(randomorak.Count);
                         string randomnap = randomnapok[index];
-
-
-                       
-                    }
+                        string randomora = randomorak[index2];
+                        napokDict[randomnap][randomora] += versenyok[i].azonosito + "   ";
+                        
+                        break;
+                    }break;
                 }
-                break;
+                
             }
-            Console.WriteLine("-----------------------");
+            
 
 
             foreach (var item in napokDict)
@@ -251,9 +250,9 @@ namespace PM_gokart
            
             while (true)
             {
-                Console.Write("Szeretnél-e időpontot foglalni? (y/n): ");
+                Console.Write("Időpontot szeretnél foglalni vagy módosítani szeretnél (f/m/exit): ");
                 string choice = Console.ReadLine().ToLower();
-                if (choice == "y")
+                if (choice == "f")
                 {
                     string nap;
                     string azonosito;
@@ -267,6 +266,23 @@ namespace PM_gokart
                         nap = Console.ReadLine();
                         Console.Write("Mettől meddig? ");
                         ora = Console.ReadLine();
+                        foreach (var napok in napokDict)
+                        {
+                            if (napok.Key.Substring(napok.Key.Length - 2) == nap)
+                            {
+                                foreach (var orak in napok.Value)
+                                {
+                                    if (ora == orak.Key & Idopont(orak.Value) == "foglalt")
+                                    {
+
+                                        Console.WriteLine("Az időpont foglalt");
+                                        
+                                        break;
+                                        
+                                    }
+                                }
+                            }
+                        }
                         break;
                     }
                    
@@ -278,16 +294,66 @@ namespace PM_gokart
                                 if (ora == orak.Key)
                                 {
                                     
-                                    napokDict[napok.Key][orak.Key] += azonosito;
+                                    napokDict[napok.Key][orak.Key] += azonosito + "   ";
+                                    Console.WriteLine($"Az időpont sikeresen lefoglalva");
                                     break;
                                 }                              
                             }
                         }
                     }
                 }
-                else
+                else if (choice == "m"){
+                    foreach (var item in napokDict)
+                    {
+                        foreach (var item2 in item.Value)
+                        {
+                            if (item2.Value != "")
+                            {
+                                Console.WriteLine($"{item2.Value} -- {item.Key} - {item2.Key}");
+                            }
+                        }
+                    }
+                    Console.Write("Kinek az időpontját szeretnéd módosítani? (azonosíto): ");
+                    string chosenperson = Console.ReadLine();
+                    foreach (var item in napokDict)
+                    {
+                        foreach (var item2 in item.Value)
+                        {
+                            if (item2.Value == chosenperson)
+                            {       
+                                napokDict[item.Key][item2.Key] = "";
+                            }   
+                        }
+                    }
+                    Console.Write("Hanyadikára akarod módosítani?: ");
+                    string hanyadika = Console.ReadLine();
+                    Console.Write("Mettől meddig?: ");
+                    string mettolmeddig = Console.ReadLine();
+
+                    foreach (var napok in napokDict)
+                    {
+                        if (napok.Key.Substring(napok.Key.Length - 2) == hanyadika)
+                        {
+                            foreach (var orak in napok.Value)
+                            {
+                                if (mettolmeddig == orak.Key)
+                                {
+
+                                    napokDict[napok.Key][orak.Key] += chosenperson;
+                                    Console.WriteLine($"Az időpont sikeresen módosítva");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(choice.ToLower() == "exit")
                 {
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Érvénytelen bemenet");
                 }
             }
             //kiiratás
@@ -321,17 +387,7 @@ namespace PM_gokart
                         
                 }
                 Console.WriteLine();
-            }
-            /*
-            foreach (var item in napokDict)
-            {
-                Console.WriteLine($"{item.Key}");
-                foreach (var item2 in item.Value)
-                {
-                    Console.WriteLine(item2);
-                }
-            }*/
-            
+            }      
             Console.WriteLine();
             Console.WriteLine("Nyomj meg egy gombot a kilépéshez");
             Console.ReadKey();
