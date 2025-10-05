@@ -15,21 +15,23 @@ namespace PM_gokart
     {
         static string Ekezet(string szoveg)
         {
+            szoveg = szoveg.ToLower();
             string ujszo = "";
             Dictionary<char, string> ekezet = new Dictionary<char, string>()
-        {
-            {'á',"a"},
-            {'é',"e"},
-            {'ú',"u"},
-            {'ű',"u"},
-            {'ő',"o"},
-            {'ó',"o"},
-            {'ü',"u"},
-            {'ö',"o"},
-            {'í',"i"}
-        };
+            {
+                {'á',"a"},
+                {'é',"e"},
+                {'ú',"u"},
+                {'ű',"u"},
+                {'ő',"o"},
+                {'ó',"o"},
+                {'ü',"u"},
+                {'ö',"o"},
+                {'í',"i"}
+            };
             for (int i = 0; i < szoveg.Length; i++)
             {
+                  
                 if (ekezet.ContainsKey(szoveg[i]))
                 {
                     ujszo += ekezet[szoveg[i]];
@@ -39,7 +41,8 @@ namespace PM_gokart
                     ujszo += szoveg[i];
                 }
             }
-            return ujszo;
+            string eredmeny = char.ToUpper(ujszo[0]) + ujszo.Substring(1);
+            return eredmeny;
         }
         public class Versenyzo
         {
@@ -48,34 +51,35 @@ namespace PM_gokart
             public string szul;
             public bool tizennyolc;
             public string azonosito;
+            public string email;
 
-            public Versenyzo(string venev, string kenev, string szul, bool tizennyolc, string azonosito)
+            public Versenyzo(string venev, string kenev, string szul, bool tizennyolc, string azonosito, string email)
             {
                 this.venev = venev;
                 this.kenev = kenev;
                 this.szul = szul;
                 this.tizennyolc = tizennyolc;
                 this.azonosito = azonosito;
+                this.email = email;
             }
         }
-        public static string Idopont(bool szabad)
+        public static string Idopont(string szabad)
         {
             string asd = "";
-            if (szabad)
+            if (szabad == "")
             {
                 asd = "szabad";
-                
             }
             else
             {
-                asd = "szabad";
+                asd = "foglalt";
                 
             }
             return asd;
         }
         static void Main(string[] args)
         {
-            /*
+      /*
             Gokart időpontfoglaló 
             PM - 2025.09.15
             */
@@ -144,6 +148,7 @@ namespace PM_gokart
                 int range = (DateTime.Today - start).Days;
                 string szul = start.AddDays(rnd.Next(range)).ToString("yyyy/MM/dd");
                 Console.WriteLine(szul);
+
                 // elmult 18?
                 var age = Math.Floor((DateTime.Now - DateTime.Parse(szul)).TotalDays / 365.242199);
                 bool elmult = false;
@@ -151,40 +156,20 @@ namespace PM_gokart
                 {
                     elmult = true;
                 }
+
                 // azonositó
-                
-                string azonosito = $"Go-{Ekezet(venev)}{Ekezet(kenev)}-{szul.Replace(".","").Replace(" ","")}";
+                string azonosito = $"Go-{Ekezet(venev)}{Ekezet(kenev)}-{szul.Replace("/","").Replace(" ","")}";
                 Console.WriteLine(azonosito);
 
-                
-                
                 // email
                 string email = Ekezet(venev) + "." + Ekezet(kenev) + "@gmail.com";
                 Console.WriteLine(email);
 
-                versenyok.Add(new Versenyzo(venev, kenev, szul, elmult, azonosito));
+                versenyok.Add(new Versenyzo(venev, kenev, szul, elmult, azonosito, email));
                 Console.WriteLine("----------------------");
             }
 
-            /*
-            foreach (Versenyzo versenyzo in versenyok)
-            {
-                Console.WriteLine(versenyzo.szul);
-            }*/
-
-            var orakDict = new Dictionary<string, bool>();
-            for (int i= 8; i < 19; i ++ )
-            {
-                string asd = i.ToString() + "-" + (i+1).ToString();
-                orakDict.Add(asd, true);
-            }
-
-            foreach (var item in orakDict)
-            {
-                Console.WriteLine(item.Key + item.Value);
-            }
-
-            var napokDict = new Dictionary<string, Dictionary<string,bool>>();
+            var napokDict = new Dictionary<string, Dictionary<string, string>>();
 
             DateTime ma = DateTime.Today;
             var napokmaradt = DateTime.DaysInMonth(ma.Year, ma.Month) - ma.Day + 1;
@@ -193,23 +178,161 @@ namespace PM_gokart
             {
                 DateTime date = ma.AddDays(i);
                 string datum = (date).ToString("yyyy.MM.dd");
-                
-                Console.WriteLine(datum);
-                napokDict.Add(datum, orakDict);
-                
+
+                var orakDict = new Dictionary<string, string>();
+                for (int j = 8; j < 19; j++)
+                {
+                    string asd = j.ToString() + "-" + (j + 1).ToString();
+                    orakDict.Add(asd, "");
+                }
+
+                napokDict.Add(datum, new Dictionary<string, string>(orakDict));
             }
+
+            
+            Console.WriteLine("-----------------------");
+            for (int i = 0; i < rnd.Next(1, numb); i++)
+            {
+                string randomversenyzo = versenyok[rnd.Next(0, numb)].azonosito;
+                foreach(var item in napokDict)
+                {
+                    
+                     
+                    foreach (var item2 in item.Value)
+                    {
+
+
+                        var randomnapok = napokDict.Keys.ToList();                                
+                        int index = rnd.Next(randomnapok.Count);
+                        string randomnap = randomnapok[index];
+
+
+                       
+                    }
+                }
+                break;
+            }
+            Console.WriteLine("-----------------------");
+
 
             foreach (var item in napokDict)
             {
-                Console.WriteLine($"{item.Key}");
-                foreach (var item2 in orakDict)
+                Console.Write("\t\t");
+                foreach (var item2 in item.Value)
                 {
-                    Console.WriteLine($" {item2.Key} {Idopont(item2.Value)}");
+                    Console.Write($"{item2.Key.PadRight(9)}");
                 }
+                Console.WriteLine();
+                break;
+            }
+            foreach (var item in napokDict)
+            {
+                Console.Write($"{item.Key} -");
+                foreach (var item2 in item.Value)
+                {
+                    if (Idopont(item2.Value) == "szabad")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($" {Idopont(item2.Value),8}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write($" {Idopont(item2.Value),8}");
+                        Console.ResetColor();
+                    }
+
+                }
+                Console.WriteLine();
             }
 
-                //https://stackoverflow.com/questions/41029249/dictionary-of-dictionaries-in-c-sharp
+            
+           
+            while (true)
+            {
+                Console.Write("Szeretnél-e időpontot foglalni? (y/n): ");
+                string choice = Console.ReadLine().ToLower();
+                if (choice == "y")
+                {
+                    string nap;
+                    string azonosito;
+                    string ora;
+
+                    while (true) 
+                    {
+                        Console.Write("Írj be egy azonosítót: ");
+                        azonosito = Console.ReadLine();                    
+                        Console.Write("Hanyadikán? ");
+                        nap = Console.ReadLine();
+                        Console.Write("Mettől meddig? ");
+                        ora = Console.ReadLine();
+                        break;
+                    }
+                   
+                    foreach (var napok in napokDict)
+                    {                      
+                        if (napok.Key.Substring(napok.Key.Length - 2) == nap){                         
+                            foreach(var orak in napok.Value)
+                            {                                
+                                if (ora == orak.Key)
+                                {
+                                    
+                                    napokDict[napok.Key][orak.Key] += azonosito;
+                                    break;
+                                }                              
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            //kiiratás
+            foreach (var item in napokDict)
+            {
+                Console.Write("\t\t");
+                foreach (var item2 in item.Value)
+                {
+                   Console.Write($"{item2.Key.PadRight(9)}");
+                }
                 Console.WriteLine();
+                break;
+            }
+            foreach (var item in napokDict)
+            {
+                Console.Write($"{item.Key} -");
+                foreach (var item2 in item.Value)
+                {
+                    if (Idopont(item2.Value) == "szabad")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($" {Idopont(item2.Value),8}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write($" {Idopont(item2.Value),8}");
+                        Console.ResetColor();
+                    }
+                        
+                }
+                Console.WriteLine();
+            }
+            /*
+            foreach (var item in napokDict)
+            {
+                Console.WriteLine($"{item.Key}");
+                foreach (var item2 in item.Value)
+                {
+                    Console.WriteLine(item2);
+                }
+            }*/
+            
+            Console.WriteLine();
             Console.WriteLine("Nyomj meg egy gombot a kilépéshez");
             Console.ReadKey();
         }
